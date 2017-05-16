@@ -81,3 +81,11 @@ Here are all the fields:
 
 Where region is like Colorado or Texas, and regioncode is like CO, and TX.
 
+## Limitations
+- Not a multiuser application.
+- Cannot delete any data
+- Like statement not supported
+- since I'm doing a left side function in sql (to support case insensitive searches), an index would never be used. Need to figure out how to get utf8 to be case insensitive
+- IPV6 support
+- CIDR support
+

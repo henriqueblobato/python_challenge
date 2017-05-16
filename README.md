@@ -2,7 +2,7 @@
 This program is used to upload log data, and search for IP addresses and the GeoIP and RDAP 
 info about them.  It is a web application written in Python2 using Flask, and MySql. It also
 uses a Dockerized version of freegeoip since their site has a 15,000/hr restriction.  By using 
-their Dockerfile, I'm able to still perform an API call, but without any restrictions.
+their Dockerfile, I'm able to still perform an API call, but without any restrictions. RDAP look ups use https://about.rdap.org.
 
 # How to install
 Installation is just a matter of downloading the git repo for this site and for freegeoip.  

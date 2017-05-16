@@ -77,7 +77,7 @@ Comparison operators that are supported are: `=, !=, >, <`
 Note searches are case insensitive, and that unicode is fully supported.
 
 Here are all the fields:
-ip, ipcount, rdap_name, rdap_org_name, lat, lng, city, region, regioncode, country, countrycode
+```ip, ipcount, rdap_name, rdap_org_name, lat, lng, city, region, regioncode, country, countrycode```
 
 Where region is like Colorado or Texas, and regioncode is like CO, and TX.
 

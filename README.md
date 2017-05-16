@@ -88,4 +88,5 @@ Where region is like Colorado or Texas, and regioncode is like CO, and TX.
 - since I'm doing a left side function in sql (to support case insensitive searches), an index would never be used. Need to figure out how to get utf8 to be case insensitive
 - IPV6 support
 - CIDR support
+- Improve UI so it is clearer on the order of what you need to do and provide on screen instruction
 

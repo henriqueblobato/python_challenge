@@ -1,9 +1,4 @@
-CREATE DATABASE fbg;
-USER fbg;
-CREATE USER 'user'@'%' IDENTIFIED BY '78df46013';
-
-GRANT ALL PRIVILEGES ON \*.\* TO 'user'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+use fbg;
 
 CREATE TABLE iplist (ip bigint(20) DEFAULT NULL, ipcount INT DEFAULT 1, lat decimal(10,7) DEFAULT NULL,
  lng decimal(10,7) DEFAULT NULL,

@@ -12,8 +12,9 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-o
 
 ## Installing IPSearch:
 
-
-git clone 
+```
+git clone https://github.com/tgruenewald/python_challenge.git
+```
 
 ## Install MySql docker
 From the directory that you just downloaded IPSearch, run the `setup_database.sh` script.  This will
@@ -22,13 +23,16 @@ setup a MySql container.
 
 ## Get the geoip 
 Next you will want to find another directory to download freegeoip. 
+```
 git clone https://github.com/fiorix/freegeoip
 docker build -t mygeoip .
 docker run --name mygeogeo -d -p 8080:8080 -t mygeoip
-
+```
 ## Install Flask and the IPSearch app
+```
 docker build -t ipfind .
 docker run --name fbg3 --link mygeogeo --link some-mysql -d -p 8081:80 -t ipfind
+```
 
 When everything is run, it will look like this:
 ```bash

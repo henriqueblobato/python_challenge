@@ -1,0 +1,134 @@
+{% extends "layout.html" %} {% block body %}
+<script type="text/javascript">
+  $(function () {
+    var submit_form = function (e) {
+      console.log("Starting")
+      $('#total_recs').text("Searching....");
+      $.getJSON($SCRIPT_ROOT + '/find', {
+        a: $('input[name="a"]').val()
+      }, function (data) {
+        console.log(data)
+        if (data.length > 0 && typeof data[0].ip == 'undefined') {
+          document.writeln(data);
+          document.writeln("<br>");
+          document.writeln("<strong>Refresh browser page to return and try again</strong>");
+
+        } else {
+          $('#total_recs').text("Total Rows: " + data.length);
+          var res = ""
+          res +=
+            "<table class='table'><tr><th>IP</th><th>IP Count</th><th>City</th><th>Region</th><th>Country</th><th>RDAP Name</th><th>RDAP Org</th><th>Latitude</th><th>Longitude</th></tr><tbody>"
+          console.log(res)
+          jQuery.each(data, function (index, item) {
+            // do something with `item` (or `this` is also `item` if you like)
+            console.log("row")
+            res += "<tr>"
+            console.log(res)
+            res += "<td>"
+            res += item.ip
+            res += "</td>"
+            res += "<td>"
+            res += item.ipcount
+            res += "</td>"
+
+            res += "<td>"
+            res += item.city
+            res += "</td>"
+            res += "<td>"
+            res += item.region
+            res += "</td>"
+            res += "<td>"
+            res += item.country
+            res += "</td>"
+            res += "<td>"
+            res += item.rdap_name
+            res += "</td>"
+            res += "<td>"
+            res += item.rdap_org_name
+            res += "</td>"
+
+            res += "<td>"
+            res += item.lat
+            res += "</td>"
+
+            res += "<td>"
+            res += item.lng
+            res += "</td>"
+
+            res += "</tr>"
+          });
+          res += "</tbody></table>"
+          console.log(res)
+          $('#result').html(res)
+          $('input[name=a]').focus().select();
+        }
+      });
+      return false;
+    };
+
+
+    $('button#calculate').bind('click', submit_form);
+
+    $('input[type=text]').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        submit_form(e);
+      }
+    });
+
+    $('input[name=a]').focus();
+  });
+
+  $(function () {
+    var parse = function (e) {
+      console.log('Starting parse')
+      var refreshIntervalId = setInterval(function () {
+        console.log("Interval")
+        $.getJSON($SCRIPT_ROOT + '/parse_status', {}, function (data) {
+          console.log(data)
+          $('#status').text(data)
+          if (data == "done") {
+            $('#parse').show();
+            $('#upload').show();
+            $('#parsing_in_progress').hide();
+            $('#status').text("READY!")
+            clearInterval(refreshIntervalId)
+          }
+        })
+      }, 1000)
+      $('#status').text('Starting')
+      $('#parse').hide();
+      $('#upload').hide();
+      $('#parsing_in_progress').show();
+      $.getJSON($SCRIPT_ROOT + '/parse', {
+        filename: $('input[name="file"]').val()
+      }, function (data) {
+
+
+      })
+    }
+
+
+    $('button#parse').bind('click', parse);
+  });
+</script>
+<div class="container-fluid">
+    <h1>IP Search</h1>
+    <div class="well">
+    <div id="parsing_in_progress" hidden>Even though parsing is happening you can still search.</div>
+    <p/>
+    <input type="text" size="50" name="a">
+    <button href=# id="calculate">Search</button>
+    <button href=# id="parse">Parse</button>
+      <form id="section-form" action="/uploader" method="POST" enctype="multipart/form-data">
+        <input id="datafile" type="file" name="file" accept=".txt"/>
+        <button id="upload" name="upload" type="submit">Upload</button>
+      </form>
+    <span id="status"></span>
+    <div id="total_recs"></div>
+    </div>
+    <div id="result">
+    </div>
+
+</div>
+
+{% endblock %}

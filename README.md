@@ -22,7 +22,8 @@ setup a MySql container.
 
 
 ## Get the geoip 
-Next you will want to find another directory to download freegeoip. 
+Next you will want to find another directory to download freegeoip, the directory just above
+python_challenge will do.  From there, run:
 ```
 git clone https://github.com/fiorix/freegeoip
 docker build -t mygeoip .
@@ -33,15 +34,20 @@ docker run --name mygeogeo -d -p 8080:8080 -t mygeoip
 docker build -t ipfind .
 docker run --name fbg3 --link mygeogeo --link some-mysql -d -p 8081:80 -t ipfind
 ```
+If you get flag --link: Invalid format to parse. mygeogeo should match template name:alias
+then change to these links:
+```
+ --link mygeogeo:latest --link some-mysql:5.7
+```
 
 When everything is run, it will look like this:
 ```bash
-terryg@saturn2:~/share/flask$ docker ps
+~/python_challenge$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
 2f1d4bc4c2cf        ipfind              "/usr/bin/supervisord"   4 seconds ago       Up 3 seconds        443/tcp, 0.0.0.0:8081->80/tcp   fbg3
 67f99038759b        mygeoip             "/go/bin/freegeoip"      23 minutes ago      Up 23 minutes       0.0.0.0:8080->8080/tcp          mygeogeo
 4aa71f284288        mysql:5.7           "docker-entrypoint.sh"   47 minutes ago      Up 47 minutes       3306/tcp                        some-mysql
-terryg@saturn2:~/share/flask$
+~/python_challenge$
 ```
 
 # How to Use
@@ -70,5 +76,8 @@ returned.
 Comparison operators that are supported are: `=, !=, >, <`
 Note searches are case insensitive, and that unicode is fully supported.
 
+Here are all the fields:
+ip, ipcount, rdap_name, rdap_org_name, lat, lng, city, region, regioncode, country, countrycode
 
+Where region is like Colorado or Texas, and regioncode is like CO, and TX.
 

@@ -82,6 +82,7 @@ Here are all the fields:
 Where region is like Colorado or Texas, and regioncode is like CO, and TX.
 
 ## Limitations
+- When MySql dies, it doesn't restart and no indication is given to the user of this problem
 - Not a multiuser application.
 - Cannot delete any data
 - Like statement not supported
